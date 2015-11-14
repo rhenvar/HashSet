@@ -38,6 +38,11 @@ namespace HashSet
             }
         }
 
+        public void remove(T t)
+        {
+
+        }
+
         public bool Contains(T t)
         {
             return LinkedValues[this.GetHashCode(t)].Contains(t);
@@ -51,14 +56,15 @@ namespace HashSet
         private void ReHash()
         {
             ChainList<T>[] ReHashedLinkedValues = new ChainList<T>[LinkedValues.Length * 2];
-
             foreach (ChainList<T> ChainValues in LinkedValues)
             {
                 foreach (T Value in ChainValues)
                 {
-
+                    int Index = Value.GetHashCode() % ReHashedLinkedValues.Length;
+                    ReHashedLinkedValues[Index].Add(Value);
                 }
             }
+            LinkedValues = ReHashedLinkedValues;
 
         }
 
